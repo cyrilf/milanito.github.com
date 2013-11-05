@@ -25,15 +25,13 @@ If you like those stuff and need to quickly start a similar symfony
 project, you could use the tool I made :
 a [Symfony Python Installer](https://github.com/milanito/pythonSymfonyInstaller)
 
-> Simply get it :
->
+* To get it :
+
 > `git clone https://github.com/milanito/pythonSymfonyInstaller.git`
->
-> Then :
->
+
+* Then to launch it :
+
 > `python directory_where_you_cloned_it/pythonSymfonyInstaller/symfony_install.py`
->
-> It is pretty easy to use right ?
 
 This tool will download all required _js_ and _css_ needed file and
 put them in the `web/js` and `web/css` directories. Then you have to :
@@ -87,11 +85,9 @@ Next thing to do is to be able to call the controller :
 * We have to open the _routing.yml_ situated the `app/config/` directory
 * create a route for the ajax call using the following syntax
 
-> route_for_ajax:
->
-> pattern:   /ajax/example
->
-> defaults:  \{ \_controller: YourBundle:YourController:ajaxEmplace \}
+    route_for_ajax:
+    pattern:   /ajax/example
+    defaults:  \{ \_controller: YourBundle:YourController:ajaxEmplace \}
 
 Ok, so now we can call our ajax, it will be avaible through the url
 `server/application/web/ajax/example`
@@ -129,8 +125,10 @@ What we need to do, in the javascript, is to call the ajax. So we
 write the following function :
 
     function callAjax() {
-    $('#myButton').click(function() {
-    $.get(...)
+        $('#myButton').click(function() {
+            $.get(...)
+        });
+    }
 
 The thing is : _We need the url for the ajax call!!_. To do so I tend
 to add the url as a HTML param of my div, simply by doing so :
@@ -140,14 +138,14 @@ to add the url as a HTML param of my div, simply by doing so :
 So now, the Javascript will look like this :
 
     function callAjax() {
-    $('#myButton').click(function() {
-    $.get($(this).attr("ajax-call"), function (data) { alert(data.message)});
+        $('#myButton').click(function() {
+            $.get($(this).attr("ajax-call"), function (data) { alert(data.message)});
+        });
     }
-    );}
 
 This code will simply open an alert dialog with _"here is our JSON"_
 
-### Additionnal Informations
+### Additional Informations
 
 This is a pretty straight way to make ajax call. You use the power of twig and
 symfony route mapping to generate your ajax url.
