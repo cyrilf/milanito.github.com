@@ -95,9 +95,13 @@ Next thing to do is to be able to call the controller :
 * We have to open the _routing.yml_ situated the `app/config/` directory
 * create a route for the ajax call using the following syntax
 
-    route_for_ajax:
-    pattern:   /ajax/example
-    defaults:  \{ \_controller: YourBundle:YourController:ajaxEmplace \}
+{% raw %}
+>    route_for_ajax:
+>
+>    pattern:   /ajax/example
+>
+>    defaults:  \{ \_controller: YourBundle:YourController:ajaxExample \}
+{% endraw %}
 
 Ok, so now we can call our ajax, it will be avaible through the url
 `server/application/web/ajax/example`
