@@ -87,7 +87,7 @@ erase the annotations if you used the generation above the function.
 
 Normally you should have the following in your controller file :
 
-    public function AjaxExampleAction() {
+    public function ajaxExampleAction() {
     }
 
 Next thing to do is to be able to call the controller :
