@@ -311,7 +311,7 @@ Ok and now the function :
         // Call the create function
         mRet = ( *javaEnv )->CallObjectMethod(javaEnv, mlGlobalObj, method, jstr);
         // This is the new function
-        create_new_entity(L, mRet);
+        create_new_charac(L, mRet);
 
         ( *javaEnv )->DeleteGlobalRef(javaEnv, mlClass);
         ( *javaEnv )->DeleteGlobalRef(javaEnv, mlGlobalObj);
@@ -320,6 +320,160 @@ Ok and now the function :
     }
 
 You are probably wondering what is the `create_new_entity`. Well the
-thing is we did not create any entity in [Lua](http://www.lua.org/).
-So we have to create a C file in which we define our
-[Lua](http://www.lua.org/) entity which will manipulate our objects.
+thing is we did not create any character yet in
+[Lua](http://www.lua.org/). So we have to create a C file in which we
+define our [Lua](http://www.lua.org/) character which will manipulate our
+objects.
+
+#### character.c
+
+Lets go back in our `jni/lua` directory. Lets create an `engine.c`
+file. In this file we will define the way our engine act.
+
+{% raw %}
+    #include <jni.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    #include "lua.h"
+
+    #include "lauxlib.h"
+    #include "lualib.h"
+
+    #define CHARACTER "Character"
+
+    static jmethodID    get_message_method   = NULL;
+    static jclass       throwable_class      = NULL;
+    static jclass       mlClass = NULL;
+    static jobject      mlGlobalObj = NULL;
+    static JNIEnv *     javaEnv = NULL;
+
+    // We use a simple id to get our character in java from the
+    // CharactEngine class
+    typedef struct Character {
+        int charactRef;
+    } Character;
+
+    // This function is to get the charac from Lua
+    static Character *charac_tocharact ( lua_State *L, int index ) {
+        // Create the charac in the lua memory
+        Character *charac = (Character *) lua_touserdata( L, index );
+        if (entity == NULL) luaL_typerror(L, index, CHARACTER);
+        return charac;
+    }
+
+    // This function is to check if charac
+    static Character *charac_check ( lua_State *L, int index ) {
+        Character *charac = (Entity *)luaL_checkudata(L, index, CHARACTER);
+        if (entity == NULL) luaL_typerror(L, index, CHARACTER);
+        return entity;
+    }
+
+    // This function is to push the charac type
+    static void charac_push ( lua_State * L,  Character *charac) {
+        lua_pushlightuserdata(L, charac);
+        luaL_getmetatable(L, CHARACTER);
+        lua_setmetatable(L, -2);
+    }
+
+    // This function is to create a new charac
+    static int charac_new ( lua_State * L, int characRef ) {
+        Character *charac = calloc(1, sizeof(Character));
+        charac->charactRef = characRef;
+        charac_push(L, charac);
+
+        return 1;
+    }
+
+    [...]
+
+    // This is the function to get a field using .
+    static int entity_index ( lua_State *L ) {
+        const char* key = luaL_checkstring(L, 2);
+
+        lua_getmetatable(L, 1);
+        lua_getfield(L, -1, key);
+
+        if(!lua_isnil(L, -1))
+            return 1;
+
+        lua_settop(L, 2);
+
+        if (!strcmp(key, "atP"))
+            return ml_getAtPEntity(L);
+        else if (!strcmp(key, "deP"))
+        ...
+
+        return 0;
+     }
+
+    // This is the function to update a field using .
+    static int entity_newindex ( lua_State *L ) {
+
+        const char* key = luaL_checkstring(L, 2);
+
+        lua_getmetatable(L, 1);
+        lua_getfield(L, -1, key);
+
+        if(!lua_isnil(L, -1))
+            return 1;
+
+        lua_settop(L, 3);
+        if (!strcmp(key, "atP"))
+            return entity_setAtP(L);
+        else if (!strcmp(key, "deP"))
+        ...
+
+        return 0;
+    }
+
+    static const luaL_reg characlib_m[] = {
+    // In here you list all the functions
+        {"getAtP", ml_getAtPEntity},
+        {"setAtP", entity_setAtP},
+        ...
+        {"__index", entity_index},
+        {"__newindex", entity_newindex},
+        {NULL, NULL}
+    };
+
+    // This is all your meta
+    static const luaL_reg characlib_meta[] = {
+        {"new", entity_new},
+        {0, 0}
+    };
+
+    int charac_register( lua_State *L ) {
+        // Create the metatable for CHARACTER and add it to the lua registery
+        luaL_newmetatable(L, CHARACTER);
+        lua_pushvalue(L, -1);
+        lua_setfield(L, -2, "__index");
+        // Then we fill the metatable with the methods
+        luaL_openlib(L, 0, entitylib_m, 0);
+        // Then the meta
+        luaL_openlib(L, ENTITY, entitylib_meta, 0);
+
+        return 1;
+    }
+
+    /****************************** OUTSIDE ****************************/
+    int create_new_charac ( lua_State * L, int mlObjRef ) {
+        return charac_new(L, mlObjRef);
+    }
+
+{% endraw %}
+
+This is quite long for a blog ... Ok this file defines the functions
+used for registering the charac, the function to use the `.` notation
+and the new.
+
+The last thing we neet to do is to implement the function that will
+interface between the Java and the [Lua](http://www.lua.org/).
+
+I will only write an example function for the get Attaque points,
+because the article is getting way too big, but basically it is always
+the same :
+
+{% raw %}
+
+{% endraw %}
