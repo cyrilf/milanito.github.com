@@ -9,7 +9,7 @@ tags: [symfony ajax]
 
 ## Introduction
 
-Symonfy2 is such a great framework. I not a big fan of the php
+Symfony2 is such a great framework. I not a big fan of the php
 language, but symfony is so powerful, I don't mind using it.
 
 This article is not about how you can use symfony. So if you don't
