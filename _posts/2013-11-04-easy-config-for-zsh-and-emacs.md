@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Easy Config for ZSH and Emacs"
-description: "Have some problem configuring emacs and zsh?"
+description: "Have some problem configuring emacs and zsh ?"
 category: "config"
 tags: [config emacs zsh]
 ---
