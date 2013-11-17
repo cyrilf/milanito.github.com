@@ -5,9 +5,10 @@ tagline:
 ---
 {% include JB/setup %}
 
-## Posts
-
+<div class="row-fluid">
+<div class="span6">
 <div class="posts">
+  <h2>Posts</h2>
   {% for post in site.posts %}
     <div>
     <h5>{{ post.date | date_to_string }}</h5>
@@ -17,17 +18,23 @@ tagline:
     <hr/>
   {% endfor %}
 </div>
+</div>
+<div class="span6">
+<h2>Welcome on my Blog</h2>
 
-## Welcome on my Blog
+<p>My name is Matthieu Rondeau, I am a Web Mobile Engineer from France</p>
 
-I started this blog for several reasons :
-* I wanted to share some of my ideas of course
-* I wanted to test the Jekyll stuf.
-This is of course still in progress but I am working on it
+<p>I started this blog for several reasons :
+<ul>
+<li> I wanted to share some of my ideas of course</li>
+<li> I wanted to test the Jekyll stuf.</li>
+</ul>
+</p>
 
-## Credits
-This site has been made using [Jekyll Bootstrap](http://jekyllbootstrap.com).
+<h2>Contents</h2>
+<p>This is still a <strong>work in progress</strong>. But you will find several
+things about Mobile and Web development.</p>
 
 
-
-
+</div>
+</div>
