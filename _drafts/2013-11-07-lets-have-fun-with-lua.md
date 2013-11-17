@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Lets have fun with Lua"
-description: ""
+description: "What if I want to use Lua in Android ?"
 category: "android"
 tags: [android lua]
 ---
@@ -149,7 +149,9 @@ singleton :
             ExampleCharacter mCharac = new ExampleCharacter();
             mCharact.setId(String.valueOf(mCharactMap.size() + 1));
             mCharact.setName("toto_" + String.valueOf(mCharactMap.size() + 1));
-            this.mCharactMap.put(
+            this.mCharactMap.put(mCharac.getId(), mCharac);
+
+            return mCharac.getId();
         }
 
 So the `charactEngine.new()` is equivalent to :
@@ -400,7 +402,7 @@ file. In this file we will define the way our engine act.
         lua_settop(L, 2);
 
         if (!strcmp(key, "atP"))
-            return ml_getAtPEntity(L);
+            return entity_getAtP(L);
         else if (!strcmp(key, "deP"))
         ...
 
@@ -429,7 +431,7 @@ file. In this file we will define the way our engine act.
 
     static const luaL_reg characlib_m[] = {
     // In here you list all the functions
-        {"getAtP", ml_getAtPEntity},
+        {"getAtP", entity_getAtP},
         {"setAtP", entity_setAtP},
         ...
         {"__index", entity_index},
@@ -451,7 +453,7 @@ file. In this file we will define the way our engine act.
         // Then we fill the metatable with the methods
         luaL_openlib(L, 0, entitylib_m, 0);
         // Then the meta
-        luaL_openlib(L, ENTITY, entitylib_meta, 0);
+        luaL_openlib(L, CHARACTER, entitylib_meta, 0);
 
         return 1;
     }
@@ -475,5 +477,57 @@ because the article is getting way too big, but basically it is always
 the same :
 
 {% raw %}
+    static int entity_getAtP( lua_State *L ) {
+        // Gets the entity
+        Character *charac = charac_check(L, 1);
+        JNIEnv * javaEnv;
 
+        // Get the java env
+        javaEnv = getAppEnvFromState( L );
+        // Get the MLAdObject Java Class
+        throwable_class = ( *javaEnv )->FindClass(javaEnv, "com/example/model/CharactEngine");
+        if (throwable_class == 0) {
+            [Handle error]
+        }
+        // Register as globalref and delete local one
+        mlClass =  ( *javaEnv )->NewGlobalRef(javaEnv, throwable_class);
+        ( *javaEnv )->DeleteLocalRef(javaEnv, throwable_class);
+        // Get the "getInstance" method from the Java MlAdObject
+        method = ( *javaEnv )->GetStaticMethodID( javaEnv , mlClass , "getInstance" ,"()Lcom/example/model/CharactEngine;");
+        if (method == 0) {
+            [Handle error]
+        }
+        // Retreive the singleton CharactEngine, register it as global and delete the local ref
+        mlObj = ( *javaEnv )->CallStaticObjectMethod(javaEnv, mlClass, method);
+        mlGlobalObj = ( *javaEnv )->NewGlobalRef(javaEnv, mlObj);
+        ( *javaEnv )->DeleteLocalRef(javaEnv, mlObj);
+
+        method = ( *javaEnv )->GetMethodID( javaEnv , mlClass , "getAtP" ,"(I)I");
+
+        mlResult = luaL_checknumber( L , -1 );
+        ( *javaEnv )->CallVoidMethod( javaEnv , mlGlobalObj , method, mlObjRefString , mlResult );
+
+        // Delete the global ref (less memory consumption)
+        ( *javaEnv )->DeleteGlobalRef(javaEnv, mlClass);
+        ( *javaEnv )->DeleteGlobalRef(javaEnv, mlGlobalObj);
+
+        return mlResult
 {% endraw %}
+
+And in the CharactEngine Class, we define the function getAtP :
+
+{% raw %}
+    public int function getAtP(int characRef) {
+        ExampleCharacter charac = this.mCharactMap.get(characRef);
+
+        return charac.getAtP();
+    }
+{% endraw %}
+
+## Conclusion
+
+That is it, you can know use Lua in your android project. Please be
+aware that the solution presented is only mine, and I did not detail
+everything in the article.
+
+Please feel free to comment if you have any question.
