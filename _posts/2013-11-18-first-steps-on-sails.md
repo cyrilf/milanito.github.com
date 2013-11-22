@@ -18,6 +18,15 @@ I really like Javascript, it is very confortable to work on, a full
 object language, and because I have seen it with our trainee, it is
 quite easy to learn.
 
+When you develop a web app using sails, you use the same langage all
+along your developement. This allows a data manipulation way easier and
+most of the time a faster coding.
+
+The catch with this kind of framework is that it is so straighfoward
+that you might be tented to do stuff a bit messy. You have to be very
+careful about your specifications before jumping into coding. Anyway
+it is so nice to use.
+
 
 ## Installation
 
@@ -100,4 +109,25 @@ function this way :
 > view in subfolder.
 
 In our case, the view will be the `index.ejs` file situated in the
-`view/example` folder. EJS files are
+`view/example` folder. EJS files are ajax templates. They autorise you
+to do most of the work, meaning variable handling and loops. You can
+change the views' layout by modifying the `config/views.js` file. The
+basic layout include two custom block : `title` and `body`, meaning the
+view will be the body part.
+
+For this example simply put :
+
+    <p>Hello Worl</p>
+
+And that's it, you have your hello world, after lauching `sails lift`
+of course.
+
+## Conclusion
+
+I wanted to make a clear short first article on sails for I will try
+to do several others that will focus on specific parts of the
+framework. Anyway since I discovered it I can stop using it. It is
+very convenient to use for it has everything you need to build strong
+web app, and it is very easy to use. Sure it does lack some features,
+especially in the model handling, but it is so pratical to never change
+langage all along a web app, that it is easily forgive.
