@@ -18,7 +18,7 @@ developper.</p>
 in computer science engineering in 2011, but I have been a geek
 about it for quite some times now.</p>
 
-<p>I work mostly on Android Apps, and on eb technologies such
+<p>I work mostly on Android Apps, and on web technologies such
   as PHP and Javascript (I did a bit of java too).</p>
 
 You can check out my differents profiles :
