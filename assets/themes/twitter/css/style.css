@@ -33,6 +33,9 @@
   text-align: left; }
 
 /* post-full*/
+.post-full {
+  padding-left: 20px;
+}
 .post-full .date {
   margin-bottom: 20px;
   font-weight: bold; }

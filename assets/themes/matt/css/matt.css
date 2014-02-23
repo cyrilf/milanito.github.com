@@ -2,6 +2,10 @@ body {
   font-family: "Titillium Web", sans-serif;
 }
 
+.post-full {
+	padding-left 20px;
+}
+
 .readmore  {
 	float: right;
 }
