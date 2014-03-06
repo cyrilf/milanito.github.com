@@ -108,7 +108,7 @@ Or you can use indentation, everything indented one tab or two space is in the c
     will result in
     <div id="mydiv" class="mydiv"><span id="myspan">in here</span></div>
 
-So lets say we integrated [Bootstrap]() in our site, a login form would only take something like :
+So lets say we integrated [Bootstrap](http://getbootstrap.com) in our site, a login form would only take something like :
 
     .container
         .row

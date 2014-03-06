@@ -9,13 +9,13 @@ tags: []
 
 ## Introduction
 
-I have been working with angular for sometimes now and it is quite a wonder. One thing I find very interesting is the possibility to manipulate the DOM that offer [directives](docs.angularjs.org/guide/directive).
+I have been working with angular for sometimes now and it is quite a wonder. One thing I find very interesting is the possibility to manipulate the DOM that offer [directives](http://docs.angularjs.org/guide/directive).
 
 In this article I am going to explain a bit what directives are through the creation of a _upload by drop widget_.
 
 ## How I did it before
 
-When I was using tools like [JQuery](jquery.com), to do a drop using a plugin like [Dropzone](dropzonejs.com). I never did really try to make one myself (bad thing I know) for I never really had the time.
+When I was using tools like [JQuery](https://jquery.com), to do a drop using a plugin like [Dropzone](http://dropzonejs.com). I never did really try to make one myself (bad thing I know) for I never really had the time.
 
 But on an application I had to remake, I had to integrate several drop widget, and I found it is quite easy to implement such a feature with Angular. Let me show you.
 

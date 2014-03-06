@@ -107,7 +107,7 @@ If you now run the `grunt bower` command, you should see a `jquery` folder in yo
 
 This would get the `jquery.min.js` and put it in the `assets/linker/js/vendor/jquery` folder, right where it should be.
 
-But what if I want something a bit more complicated ? Lets integrate [bootstrap](http;//getboostrap.com). So I update my dependencies : 
+But what if I want something a bit more complicated ? Lets integrate [bootstrap](http://getboostrap.com). So I update my dependencies : 
 
     "dependencies": {
       "jquery": "1.10.2",

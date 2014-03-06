@@ -24,7 +24,7 @@ And a new android project :
 
 But of course, you can create it through your favorite IDE.
 
-In this article we will be using [socket.io](socket.io) which comes bundled with sails, both for client and server. But as we are going to use an Android client, we need to use an external library. I recommand [Socket.IO-Client](https://github.com/Gottox/socket.io-java-client) which works pretty well. To add it to your project, just do the following :
+In this article we will be using [socket.io](http://socket.io) which comes bundled with sails, both for client and server. But as we are going to use an Android client, we need to use an external library. I recommand [Socket.IO-Client](https://github.com/Gottox/socket.io-java-client) which works pretty well. To add it to your project, just do the following :
 
     # git clone git://github.com/Gottox/socket.io-java-client.git
     # cd socket.io-java-client
